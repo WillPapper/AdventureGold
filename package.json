@@ -1,0 +1,30 @@
+{
+  "name": "AdventureGold",
+  "version": "0.0.1",
+  "description": "Adventure Gold ERC-20 contract for the Loot project community. This contract is unaudited!",
+  "main": "package.json",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wpapper/AdventureGold.git"
+  },
+  "keywords": [
+    "Adventure",
+    "Gold",
+    "Loot"
+  ],
+  "author": "Will Papper",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/wpapper/AdventureGold/issues"
+  },
+  "homepage": "https://github.com/wpapper/AdventureGold#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.1"
+  }
+}
