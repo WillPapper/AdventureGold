@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/wpapper/AdventureGold#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.3.1"
+    "@openzeppelin/contracts": "^4.3.1",
+    "@truffle/hdwallet-provider": "^1.5.0",
+    "dotenv": "^10.0.0"
   }
 }
