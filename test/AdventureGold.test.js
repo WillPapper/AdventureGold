@@ -37,6 +37,15 @@ contract('AdventureGold', (accounts) => {
   });
 
   it('Claim by ID', async () => {
+    // Claiming an unclaimed ID should succeed 
+    await adventureGoldInstance.claimById(5805, { from: accounts[1] }).should.eventually.be.fulfilled;
+    assert.equal(await adventureGoldInstance.balanceOf(accounts[1]), web3.utils.toWei("10000"));
+
+    // Claiming a claimed ID should fail
+    await adventureGoldInstance.claimById(5805, { from: accounts[1] }).should.eventually.be.rejectedWith("GOLD_CLAIMED_FOR_TOKEN_ID");
+
+    // Claiming by a user other than the owner should fail
+    await adventureGoldInstance.claimById(1, { from: accounts[1] }).should.eventually.be.rejectedWith("MUST_OWN_TOKEN_ID");
   });
 
 });
