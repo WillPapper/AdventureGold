@@ -22,7 +22,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     IERC721Enumerable public lootContract;
 
     // Give out 10,000 Adventure Gold for every Loot Bag that a user holds
-    uint256 public adventureGoldPerTokenId = 10000**decimals();
+    uint256 public adventureGoldPerTokenId = 10000 * (10**decimals());
 
     // tokenIdStart of 1 is based on the following lines in the Loot contract:
     /** 
@@ -156,7 +156,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     /// input as the display value, not in raw decimals. If you want to mint
     /// 100 Loot, you should enter "100" rather than the value of 100 * 10^18.
     function daoMint(uint256 amountDisplayValue) public onlyOwner {
-        _mint(owner(), amountDisplayValue**decimals());
+        _mint(owner(), amountDisplayValue * (10**decimals()));
     }
 
     /// @notice Allows the DAO to set a new contract address for Loot. This is
@@ -180,7 +180,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
         public
         onlyOwner
     {
-        adventureGoldPerTokenId = adventureGoldDisplayValue**decimals();
+        adventureGoldPerTokenId = adventureGoldDisplayValue * (10**decimals());
     }
 
     /// @notice Allows the DAO to set the token IDs that are eligible to claim
