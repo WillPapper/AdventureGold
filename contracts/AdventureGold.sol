@@ -61,7 +61,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
 
     /// @notice Claim Adventure Gold for a given Loot ID
     /// @param tokenId The tokenId of the Loot NFT
-    function claimById(uint256 tokenId) public {
+    function claimById(uint256 tokenId) external {
         // Follow the Checks-Effects-Interactions pattern to prevent reentrancy
         // attacks
 
@@ -82,7 +82,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     /// @notice This function will run out of gas if you have too much loot! If
     /// this is a concern, you should use claimRangeForOwner and claim Adventure
     /// Gold in batches.
-    function claimAllForOwner() public {
+    function claimAllForOwner() external {
         uint256 tokenBalanceOwner = lootContract.balanceOf(_msgSender());
 
         // Checks
@@ -104,7 +104,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     /// once or if you want to leave some Loot unclaimed. If you leave Loot
     /// unclaimed, however, you cannot claim it once the next season starts.
     function claimRangeForOwner(uint256 ownerIndexStart, uint256 ownerIndexEnd)
-        public
+        external
     {
         uint256 tokenBalanceOwner = lootContract.balanceOf(_msgSender());
 
@@ -161,7 +161,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     /// @param amountDisplayValue The amount of Loot to mint. This should be
     /// input as the display value, not in raw decimals. If you want to mint
     /// 100 Loot, you should enter "100" rather than the value of 100 * 10^18.
-    function daoMint(uint256 amountDisplayValue) public onlyOwner {
+    function daoMint(uint256 amountDisplayValue) external onlyOwner {
         _mint(owner(), amountDisplayValue * (10**decimals()));
     }
 
@@ -169,11 +169,31 @@ contract AdventureGold is Context, Ownable, ERC20 {
     /// relevant in the event that Loot migrates to a new contract.
     /// @param lootContractAddress_ The new contract address for Loot
     function daoSetLootContractAddress(address lootContractAddress_)
-        public
+        external
         onlyOwner
     {
         lootContractAddress = lootContractAddress_;
         lootContract = IERC721Enumerable(lootContractAddress);
+    }
+
+    /// @notice Allows the DAO to set the token IDs that are eligible to claim
+    /// Loot
+    /// @param tokenIdStart_ The start of the eligible token range
+    /// @param tokenIdEnd_ The end of the eligible token range
+    /// @dev This is relevant in case a future Loot contract has a different
+    /// total supply of Loot
+    function daoSetTokenIdRange(uint256 tokenIdStart_, uint256 tokenIdEnd_)
+        external
+        onlyOwner
+    {
+        tokenIdStart = tokenIdStart_;
+        tokenIdEnd = tokenIdEnd_;
+    }
+
+    /// @notice Allows the DAO to set a season for new Adventure Gold claims
+    /// @param season_ The season to use for claiming Loot
+    function daoSetSeason(uint256 season_) public onlyOwner {
+        season = season_;
     }
 
     /// @notice Allows the DAO to set the amount of Adventure Gold that is
@@ -187,26 +207,6 @@ contract AdventureGold is Context, Ownable, ERC20 {
         onlyOwner
     {
         adventureGoldPerTokenId = adventureGoldDisplayValue * (10**decimals());
-    }
-
-    /// @notice Allows the DAO to set the token IDs that are eligible to claim
-    /// Loot
-    /// @param tokenIdStart_ The start of the eligible token range
-    /// @param tokenIdEnd_ The end of the eligible token range
-    /// @dev This is relevant in case a future Loot contract has a different
-    /// total supply of Loot
-    function daoSetTokenIdRange(uint256 tokenIdStart_, uint256 tokenIdEnd_)
-        public
-        onlyOwner
-    {
-        tokenIdStart = tokenIdStart_;
-        tokenIdEnd = tokenIdEnd_;
-    }
-
-    /// @notice Allows the DAO to set a season for new Adventure Gold claims
-    /// @param season_ The season to use for claiming Loot
-    function daoSetSeason(uint256 season_) public onlyOwner {
-        season = season_;
     }
 
     /// @notice Allows the DAO to set the season and Adventure Gold per token ID
