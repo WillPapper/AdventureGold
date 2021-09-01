@@ -14,6 +14,12 @@ contract('AdventureGold', (accounts) => {
 
   before(async () => {
     adventureGoldInstance = await AdventureGold.deployed();
+    // Transfer Loot to different accounts for testing purposes
+    lootContract.methods.safeTransferFrom("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", accounts[0], 5194).send({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", gasLimit: 800000 });
+    lootContract.methods.safeTransferFrom("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", accounts[0], 2883).send({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", gasLimit: 800000 });
+    lootContract.methods.safeTransferFrom("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", accounts[0], 2103).send({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", gasLimit: 800000 });
+    lootContract.methods.safeTransferFrom("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", accounts[1], 5805).send({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78", gasLimit: 800000 });
+
   });
 
   after(async () => {
@@ -21,15 +27,16 @@ contract('AdventureGold', (accounts) => {
   });
 
   it('Contract names should be correct', async () => {
-
     assert.equal(await adventureGoldInstance.name(), 'Adventure Gold');
     assert.equal(await adventureGoldInstance.symbol(), 'AGLD');
     assert.equal(await lootContract.methods.name().call(), 'Loot');
   });
 
   it('Test Loot values', async () => {
-    const adventureGoldInstance = await AdventureGold.deployed();
-
-    assert.equal(await lootContract.methods.balanceOf('0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78').call(), new BN('24'));
+    assert.equal(await lootContract.methods.balanceOf('0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78').call(), new BN('20'));
   });
+
+  it('Claim by ID', async () => {
+  });
+
 });
