@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "ganache-cli -f https://cloudflare-eth.com/ -m \"apple apple apple apple apple apple apple apple apple apple apple apple\" --secure --unlock \"0xdd3767abcab26f261e2508a1da1914053c7dda78\" --unlock \"0xcD814C83198C15A542F9A13FAf84D518d1744ED1\" -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9",
     "test": "truffle test"
   },
   "repository": {
@@ -28,5 +29,9 @@
     "@openzeppelin/contracts": "^4.3.1",
     "@truffle/hdwallet-provider": "^1.5.0",
     "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.13",
+    "chai-as-promised": "^7.1.1"
   }
 }

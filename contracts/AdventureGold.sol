@@ -88,6 +88,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
         // Checks
         require(tokenBalanceOwner > 0, "NO_TOKENS_OWNED");
 
+        // i < tokenBalanceOwner because tokenBalanceOwner is 1-indexed
         for (uint256 i = 0; i < tokenBalanceOwner; i++) {
             // Further Checks, Effects, and Interactions are contained within
             // the _claim() function
@@ -118,7 +119,8 @@ contract AdventureGold is Context, Ownable, ERC20 {
             "INDEX_OUT_OF_RANGE"
         );
 
-        for (uint256 i = ownerIndexStart; i < ownerIndexEnd; i++) {
+        // i <= ownerIndexEnd because ownerIndexEnd is 0-indexed
+        for (uint256 i = ownerIndexStart; i <= ownerIndexEnd; i++) {
             // Further Checks, Effects, and Interactions are contained within
             // the _claim() function
             _claim(
@@ -132,6 +134,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     function _claim(uint256 tokenId, address tokenOwner) internal {
         // Checks
         // Check that the token ID is in range
+        // We use >= and <= to here because all of the token IDs are 0-indexed
         require(
             tokenId >= tokenIdStart && tokenId <= tokenIdEnd,
             "TOKEN_ID_OUT_OF_RANGE"
