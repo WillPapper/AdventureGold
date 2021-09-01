@@ -75,7 +75,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
 
         // Further Checks, Effects, and Interactions are contained within the
         // _claim() function
-        _claim(tokenId);
+        _claim(tokenId, _msgSender());
     }
 
     /// @notice Claim Adventure Gold for all tokens owned by the sender
@@ -91,7 +91,10 @@ contract AdventureGold is Context, Ownable, ERC20 {
         for (uint256 i = 0; i < tokenBalanceOwner; i++) {
             // Further Checks, Effects, and Interactions are contained within
             // the _claim() function
-            _claim(lootContract.tokenOfOwnerByIndex(_msgSender(), i));
+            _claim(
+                lootContract.tokenOfOwnerByIndex(_msgSender(), i),
+                _msgSender()
+            );
         }
     }
 
@@ -118,12 +121,15 @@ contract AdventureGold is Context, Ownable, ERC20 {
         for (uint256 i = ownerIndexStart; i < ownerIndexEnd; i++) {
             // Further Checks, Effects, and Interactions are contained within
             // the _claim() function
-            _claim(lootContract.tokenOfOwnerByIndex(_msgSender(), i));
+            _claim(
+                lootContract.tokenOfOwnerByIndex(_msgSender(), i),
+                _msgSender()
+            );
         }
     }
 
     /// @dev Private function to mint Loot upon claiming
-    function _claim(uint256 tokenId) internal {
+    function _claim(uint256 tokenId, address tokenOwner) internal {
         // Checks
         // Check that the token ID is in range
         require(
@@ -147,7 +153,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
         // Interactions
 
         // Send Adventure Gold to the owner of the token ID
-        _mint(lootContract.ownerOf(tokenId), adventureGoldPerTokenId);
+        _mint(tokenOwner, adventureGoldPerTokenId);
     }
 
     /// @notice Allows the DAO to mint new tokens for use within the Loot
