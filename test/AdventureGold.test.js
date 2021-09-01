@@ -48,4 +48,17 @@ contract('AdventureGold', (accounts) => {
     await adventureGoldInstance.claimById(1, { from: accounts[1] }).should.eventually.be.rejectedWith("MUST_OWN_TOKEN_ID");
   });
 
+  it('Claim all for owner', async () => {
+    // Claiming all for the owner should succeed
+    await adventureGoldInstance.claimAllForOwner({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78" }).should.eventually.be.fulfilled;
+    assert.equal(await adventureGoldInstance.balanceOf("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78"), web3.utils.toWei("200000"));
+
+    // Claiming after owner has claimed should fail
+    await adventureGoldInstance.claimAllForOwner({ from: "0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78" }).should.eventually.be.rejectedWith("GOLD_CLAIMED_FOR_TOKEN_ID");
+    assert.equal(await adventureGoldInstance.balanceOf("0xdd3767ABcAB26f261e2508A1DA1914053c7DDa78"), web3.utils.toWei("200000"));
+
+    // Claiming by a user with no Loot should fail
+    await adventureGoldInstance.claimAllForOwner({ from: accounts[9] }).should.eventually.be.rejectedWith("NO_TOKENS_OWNED");
+  });
+
 });
