@@ -134,6 +134,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     function _claim(uint256 tokenId, address tokenOwner) internal {
         // Checks
         // Check that the token ID is in range
+        // We use >= and <= to here because all of the token IDs are 0-indexed
         require(
             tokenId >= tokenIdStart && tokenId <= tokenIdEnd,
             "TOKEN_ID_OUT_OF_RANGE"
