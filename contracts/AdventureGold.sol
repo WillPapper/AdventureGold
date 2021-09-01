@@ -128,7 +128,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
         }
     }
 
-    /// @dev Private function to mint Loot upon claiming
+    /// @dev Internal function to mint Loot upon claiming
     function _claim(uint256 tokenId, address tokenOwner) internal {
         // Checks
         // Check that the token ID is in range
@@ -225,7 +225,7 @@ contract AdventureGold is Context, Ownable, ERC20 {
     function daoSetSeasonAndAdventureGoldPerTokenID(
         uint256 season_,
         uint256 adventureGoldDisplayValue
-    ) public onlyOwner {
+    ) external onlyOwner {
         daoSetSeason(season_);
         daoSetAdventureGoldPerTokenId(adventureGoldDisplayValue);
     }
